@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/hammad-sarfraz-1/mlops-jenkins-prep'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'pip install -r requirements.txt'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh 'pytest --tb=short'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'python main.py &'
+            }
+        }
+    }
+}
